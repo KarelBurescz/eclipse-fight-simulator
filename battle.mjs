@@ -10,7 +10,6 @@ class Battle {
         this.army1 = army1;
         // TODO: should I do this.army0 or army0? \/
         this.all = army0.ships.concat(army1.ships);
-
     }
     createRocketsBattleOrder() {
         const shipsWithRockets = this.all.filter((obj, i) => obj.hasRockets())
