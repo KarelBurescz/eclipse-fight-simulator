@@ -1,5 +1,7 @@
+import { Dice } from "./dice.mjs";
+
 class Component {
-  constructor({drive = 0,electricity = 0,computer = 0,shield = 0,hull = 0,consumption = 0,damage = [],type = '',agility = 0} = {}) {
+  constructor({drive = 0,electricity = 0,computer = 0,shield = 0,hull = 0,consumption = 0,damage = [],type = '',agility = 0,dice = new Dice} = {}) {
     this.drive = drive;
     this.electricity = electricity;
     this.computer = computer;
@@ -9,6 +11,7 @@ class Component {
     this.damage = damage;
     this.type = type;
     this.agility = agility;
+    this.dice = dice
   };
 };
 
