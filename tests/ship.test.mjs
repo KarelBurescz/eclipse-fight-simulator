@@ -56,4 +56,21 @@ describe('Ship', function() {
     });
   });
 
+  describe('receiveDamage', function() {
+    it('should explode the ship', function() {
+      const component1 = new Component({hull: 3})
+      const ship = new Ship({components : [component1]});
+      expect(ship.receiveDamage(4)).to.equal(true)
+    });
+  });
+
+  describe('receiveDamage', function() {
+    it('should not explode the ship', function() {
+      const component1 = new Component({hull: 3})
+      const ship = new Ship({components : [component1]});
+      expect(ship.receiveDamage(3)).to.equal(false)
+      expect(ship.receiveDamage(1)).to.equal(true)
+    });
+  });
+
 });

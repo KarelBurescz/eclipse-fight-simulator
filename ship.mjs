@@ -30,6 +30,11 @@ class Ship {
     const rockets = this.components.filter((v) => v.type === 'rocket');
     return rockets
   }
+
+  receiveDamage(damage) {
+    this.totalDamage += damage;
+    return this.totalDamage > this.getComponentsValue('hull') ? true : false;
+  }
 };
 
 export { Ship };
