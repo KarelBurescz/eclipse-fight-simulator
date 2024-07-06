@@ -8,6 +8,7 @@ class Ship {
     this.fixedComponents = fixedComponents;
     this.type = type;
     this.totalDamage = totalDamage;
+    this.isExploded = false;
 };
   getAgility() { 
     return this.baseAgility + this.components.reduce((a,curr) => a + curr.agility,0);
@@ -33,7 +34,7 @@ class Ship {
 
   receiveDamage(damage) {
     this.totalDamage += damage;
-    return this.totalDamage > this.getComponentsValue('hull') ? true : false;
+    return this.isExploded = this.totalDamage > this.getComponentsValue('hull') ? true : false;
   }
 };
 
