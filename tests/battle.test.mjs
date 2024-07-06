@@ -3,9 +3,11 @@ import { Army } from '../army.mjs';
 import { Ship } from '../ship.mjs';
 import { Component } from '../component.mjs';
 import expect from 'expect.js';
+import { Fakedice } from '../dice.mjs';
+import { GertrudaAI } from '../gertrudaAI.mjs';
 // import {  } from '../'
 describe('Battle', function() {
-describe('createRocketsBattleOrder()', function() {
+    describe('createRocketsBattleOrder()', function() {
 
         it('should return [] if there are not any ships', function() {
             let army0 = new Army([]);
@@ -65,6 +67,47 @@ describe('createRocketsBattleOrder()', function() {
             let order = new Battle(army0, army1).createRocketsBattleOrder();
             const rightOrder = [ship3, ship2, ship1];
             expect(order).to.eql(rightOrder);
+        });
+
+        it('should destroy one army', function() {
+            let fd = new Fakedice(5);
+            let ship1 = new Ship({
+                components: [
+                    new Component({type: 'rocket', damage: 3, dice: fd}),
+                    new Component({type: 'rocket', damage: 3, dice: fd}),
+                    new Component({shield: 1, dice: fd}),
+                    new Component({computer: 2, dice: fd})
+                ],
+                baseAgility: 3
+            });
+
+            let ship2 = new Ship({
+                components: [
+                    new Component({type: 'rocket', damage: 2, dice: fd}),
+                    new Component({hull: 2, dice: fd}),
+                    new Component({computer: 4, dice: fd})
+                ],
+                baseAgility: 1
+            });
+
+            let ship3 = new Ship({
+                components: [
+                    new Component({type: 'rocket', damage: 6, dice: fd}),
+                    new Component({hull: 10, dice: fd}),
+                    new Component({computer: 4, dice: fd})
+                ],
+                baseAgility: 0
+            });
+
+            let army0 = new Army('army0',[ship1]);
+            let army1 = new Army('army1',[ship2, ship3]);
+            let battle = new Battle(army0, army1);
+            battle.rocketBattle(new GertrudaAI());
+            expect(ship1.isExploded).to.eql(true);
+            expect(ship2.isExploded).to.eql(true);
+            expect(ship3.isExploded).to.eql(false);
+            expect(ship3.totalDamage).to.eql(3);
+            console.log(army0, army1);
         });
     });
 });

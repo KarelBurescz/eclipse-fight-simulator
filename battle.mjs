@@ -27,9 +27,12 @@ class Battle {
             rockets.forEach(r => {
                 let ro = r.dice.roll();
                 if(ro > 1) {
-                    let hitting = ai.selectShipToHit(ship.army === this.army1 ? this.army0 : this.army1, ship, r, ro);
-                    console.log('We are aiming for: ' + hitting);
-                    hitting.recieveDamage(r.damage);
+                    let enemyArmy = ship.army === this.army1 ? this.army0 : this.army1
+                    let hitting = ai.selectShipToHit(enemyArmy, ship, r, ro);
+                    console.log('We are aiming for a ship with aguility of: ' + hitting.getAgility());
+                    const res = hitting.receiveDamage(r.damage);
+                    enemyArmy.removeExplodeats();
+                    console.log(`ship received damage ${res}, of ${r.damage}, and it is exploded: ${hitting.isExploded}`);
                 }
             })
         });
