@@ -8,7 +8,17 @@ class Ship {
     this.fixedComponents = fixedComponents;
     this.type = type;
     this.totalDamage = totalDamage;
+    this.isExploded = false;
 };
+  clone(nTimes) {
+    const ships = []
+    for(let i = 0;i < nTimes;i++) {
+      let ship = new Ship(this) 
+      ships.push(ship)
+    }
+    return ships
+  }
+
   getAgility() { 
     return this.baseAgility + this.components.reduce((a,curr) => a + curr.agility,0);
   };
@@ -33,7 +43,7 @@ class Ship {
 
   receiveDamage(damage) {
     this.totalDamage += damage;
-    return this.totalDamage > this.getComponentsValue('hull') ? true : false;
+    return this.isExploded = this.totalDamage > this.getComponentsValue('hull') ? true : false;
   }
 };
 
