@@ -7,7 +7,13 @@ class Ship {
     this.type = type;
     this.totalDamage = totalDamage;
 }
-getAgility() { return this.baseAgility}
+  getAgility() { 
+    return this.baseAgility
+  }
+
+  hasRockets() { 
+    return this.components 
+  }
 }
 
 export {Ship}
