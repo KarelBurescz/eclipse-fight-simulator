@@ -46,5 +46,14 @@ describe('Ship', function() {
       expect(ship.getRockets()).to.eql([component1,component2])
     });
   });
+  describe('getComponentsValue', function() {
+    it('should return an array with rockets', function() {
+      const component1 = new Component({shield: 3})
+      const component2 = new Component({shield: 2})
+      const component3 = new Component({computer: 2})
+      const ship = new Ship({components : [component1,component2, component3]});
+      expect(ship.getComponentsValue('shield')).to.eql(5)
+    });
+  });
 
 });

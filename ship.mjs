@@ -13,6 +13,10 @@ class Ship {
     return this.baseAgility + this.components.reduce((a,curr) => a + curr.agility,0);
   };
 
+  getComponentsValue(compName) {
+    return this.components.reduce((ac, obj) => ac + obj[compName] || 0, 0)
+  }
+
   hasRockets() {
     return this.components.some((v) => v.type === 'rocket');
   };
