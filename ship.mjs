@@ -1,5 +1,6 @@
+
 class Ship { 
-  constructor (maxComponents,components = [],baseAgility = 0,fixedComponents = 0,type = '',totalDamage = 0) {
+  constructor ({maxComponents,components = [],baseAgility = 0,fixedComponents = 0,type = '',totalDamage = 0} = {}) {
     this.maxComponents = maxComponents;
     this.components = components;
     this.baseAgility = baseAgility;
@@ -8,7 +9,7 @@ class Ship {
     this.totalDamage = totalDamage;
 }
   getAgility() { 
-    return this.baseAgility
+    return this.baseAgility + this.components.reduce((a,curr) => a + curr.agility,0)
   }
 
   hasRockets() { 
@@ -16,4 +17,4 @@ class Ship {
   }
 }
 
-export {Ship}
+export { Ship }

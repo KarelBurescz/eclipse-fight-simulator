@@ -1,5 +1,6 @@
 class Component {
-  constructor(electricity = 0,computer = 0,shield = 0,hull = 0,consumption = 0,damage = [],type = '',agility = 0) {
+  constructor({drive = 0,electricity = 0,computer = 0,shield = 0,hull = 0,consumption = 0,damage = [],type = '',agility = 0} = {}) {
+    this.drive = drive;
     this.electricity = electricity;
     this.computer = computer;
     this.shield = shield;
@@ -8,7 +9,8 @@ class Component {
     this.damage = damage;
     this.type = type;
     this.agility = agility;
-  }
-}
+  };
+};
 
-export {Component}
+
+export { Component }
