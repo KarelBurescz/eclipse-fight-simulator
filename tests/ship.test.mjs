@@ -73,4 +73,22 @@ describe('Ship', function() {
     });
   });
 
+  describe('clone', function() {
+    it('should return an array full of the requiered ship', function() {
+     
+      
+    const drivev1 = new Component({drive: 3, consumption: 1,type:'support'})
+    const computer1 = new Component({computer: 3, consumption: 2,type:'support'})
+    const rocket1 = new Component({consumption: 1,type:'rocket',damage:2})
+    const rocket2 = new Component({consumption: 1,type:'rocket',damage:2})
+    const electricity1 = new Component({type:'support',electricity:9})
+
+    const ship = new Ship({maxComponents:5,components : [drivev1,computer1,rocket1,rocket2,electricity1],baseAgility : 3,type:'interceptor'})
+    let ships = ship.clone(3)
+
+      expect(ships.length).to.eql(3)
+      expect(ships[2].baseAgility).to.eql(3);
+    });
+  });
+
 });

@@ -10,6 +10,15 @@ class Ship {
     this.totalDamage = totalDamage;
     this.isExploded = false;
 };
+  clone(nTimes) {
+    const ships = []
+    for(let i = 0;i < nTimes;i++) {
+      let ship = new Ship(this) 
+      ships.push(ship)
+    }
+    return ships
+  }
+
   getAgility() { 
     return this.baseAgility + this.components.reduce((a,curr) => a + curr.agility,0);
   };
