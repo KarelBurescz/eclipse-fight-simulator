@@ -68,7 +68,8 @@ describe('Battle', function() {
             const rightOrder = [ship3, ship2, ship1];
             expect(order).to.eql(rightOrder);
         });
-
+    });
+    describe('rocketBattle()', function() {
         it('should destroy one army', function() {
             let fd = new Fakedice(5);
             let ship1 = new Ship({
@@ -80,7 +81,7 @@ describe('Battle', function() {
                 ],
                 baseAgility: 3
             });
-
+    
             let ship2 = new Ship({
                 components: [
                     new Component({type: 'rocket', damage: 2, dice: fd}),
@@ -89,7 +90,7 @@ describe('Battle', function() {
                 ],
                 baseAgility: 1
             });
-
+    
             let ship3 = new Ship({
                 components: [
                     new Component({type: 'rocket', damage: 6, dice: fd}),
@@ -98,7 +99,7 @@ describe('Battle', function() {
                 ],
                 baseAgility: 0
             });
-
+    
             let army0 = new Army('army0',[ship1]);
             let army1 = new Army('army1',[ship2, ship3]);
             let battle = new Battle(army0, army1);
@@ -109,5 +110,48 @@ describe('Battle', function() {
             expect(ship3.totalDamage).to.eql(3);
             console.log(army0, army1);
         });
-    });
+    })
+    describe('canonBattle()', function() {
+        it('should destroy one army', function() {
+            let fd = new Fakedice(5);
+            let ship1 = new Ship({
+                components: [
+                    new Component({type: 'canon', damage: 3, dice: fd}),
+                    new Component({type: 'canon', damage: 3, dice: fd}),
+                    new Component({shield: 1, dice: fd}),
+                    new Component({computer: 2, dice: fd}),
+                    new Component({hull: 8, dice: fd})
+                ],
+                baseAgility: 1
+            });
+            
+            let ship2 = new Ship({
+                components: [
+                    new Component({type: 'canon', damage: 2, dice: fd}),
+                    new Component({hull: 2, dice: fd}),
+                    new Component({computer: 4, dice: fd})
+                ],
+                baseAgility: 2
+            });
+            
+            let ship3 = new Ship({
+                components: [
+                    new Component({type: 'canon', damage: 6, dice: fd}),
+                    new Component({hull: 10, dice: fd}),
+                    new Component({computer: 4, dice: fd})
+                ],
+                baseAgility: 3
+            });
+            
+            let army0 = new Army('army0',[ship1]);
+            let army1 = new Army('army1',[ship2, ship3]);
+            let battle = new Battle(army0, army1);
+            battle.canonBattle(new GertrudaAI());
+            expect(ship1.isExploded).to.eql(true);
+            expect(ship2.isExploded).to.eql(true);
+            expect(ship3.isExploded).to.eql(false);
+            expect(ship3.totalDamage).to.eql(3);
+            console.log(army0, army1);
+        });
+    })
 });
