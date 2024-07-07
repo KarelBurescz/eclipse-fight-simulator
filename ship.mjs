@@ -1,6 +1,9 @@
 import { Dice } from "./dice.mjs";
 
 class Ship { 
+
+  static count = 0;
+
   constructor ({maxComponents,components = [],baseAgility = 0,fixedComponents = 0,type = '',totalDamage = 0} = {}) {
     this.maxComponents = maxComponents;
     this.components = components;
@@ -9,6 +12,8 @@ class Ship {
     this.type = type;
     this.totalDamage = totalDamage;
     this.isExploded = false;
+    this.name = `${type}-${Ship.count}`;
+    Ship.count++;
 };
   clone(nTimes) {
     const ships = []
