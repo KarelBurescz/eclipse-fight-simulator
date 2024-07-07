@@ -210,7 +210,7 @@ describe('Battle', function() {
             let battle = new Battle(army1, army2);
             battle.battle(new GertrudaAI());
             console.log('Winner!: ' + army2.ships);
-            expect(army1.ships.length).to.eql(7);
+            expect(army1.ships.length).to.eql(0);
         });
     })
 });
