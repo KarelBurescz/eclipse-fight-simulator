@@ -26,28 +26,14 @@ class Component {
   static phaseShield = new Component({ shield: 2, consumption: 1, type: "support" }); // Check
   static gaussShield = new Component({ shield: 1, type: "support" }); // Check
 
-  static fluxMissile = new Component({ damage: 1, agility: 1, type: "rocket" });
-  static plasmaMissile = new Component({ damage: 2, consumption: 1, type: "rocket" });
+  static fluxMissile = new Component({ damage: 1, agility: 1, type: "rocket", size: 0.5 });
+  static plasmaMissile = new Component({ damage: 2, consumption: 1, type: "rocket", size: 0.5 });
   static antiMatterCanon = new Component({ damage: 4, consumption: 4, type: "canon" });
   static solitionCanon = new Component({ damage: 3, consumption: 3, type: "canon" });
   static plasmaCanon = new Component({ damage: 2, consumption: 2, type: "canon" });
   static ionCanon = new Component({ damage: 1, consumption: 1, type: "canon" });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  constructor({ drive = 0, electricity = 0, computer = 0, shield = 0, hull = 0, consumption = 0, damage = 0, type = '', agility = 0, dice = new Dice } = {}) {
+  constructor({ drive = 0, electricity = 0, computer = 0, shield = 0, hull = 0, consumption = 0, damage = 0, type = '', agility = 0, dice = new Dice, size = 1 } = {}) {
     this.drive = drive;
     this.electricity = electricity;
     this.computer = computer;
@@ -57,7 +43,8 @@ class Component {
     this.damage = damage;
     this.type = type;
     this.agility = agility;
-    this.dice = dice
+    this.dice = dice;
+    this.size = size;
   };
 };
 

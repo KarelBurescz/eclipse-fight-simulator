@@ -10,32 +10,38 @@ console.log(
 
 function run() {
 
-  const shipA1 = Ship.createCruiser();
+  const shipA1 = Ship.createInterceptor();
 
   shipA1.components = [
-    Component.sentientHull,
-    Component.antiMatterCanon,
-    Component.antiMatterCanon,
-    Component.tachyonDrive,
-    Component.zeroPointSource,
-    Component.sentientHull,
+    Component.ionCanon,
+    Component.nuclearSource,
+    Component.hull,
+    Component.hull,
   ];
 
-  const shipsA1 = shipA1.clone(4);
+  const shipsA1 = shipA1.clone(1);
   const army1 = new Army("army1", shipsA1, false);
 
 
 
-  const shipA2 = Ship.createDreadnaught();
+  // const shipA2 = Ship.createDreadnaught();
+  // shipA2.components = [
+  //   Component.nuclearDrive,
+  //   Component.phaseShield,
+  //   Component.phaseShield,
+  //   Component.gluonComputer,
+  //   Component.conifoldHull,
+  //   Component.conifoldHull,
+  //   Component.plasmaCanon,
+  //   Component.zeroPointSource,
+  // ];
+
+  const shipA2 = Ship.createInterceptor();
   shipA2.components = [
-    Component.nuclearDrive,
-    Component.phaseShield,
-    Component.phaseShield,
-    Component.gluonComputer,
-    Component.conifoldHull,
-    Component.conifoldHull,
-    Component.plasmaCanon,
-    Component.zeroPointSource,
+    Component.ionCanon,
+    Component.nuclearSource,
+    Component.hull,
+    Component.electronComputer,
   ];
 
   const shipsA2 = shipA2.clone(2);

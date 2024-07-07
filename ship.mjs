@@ -5,16 +5,16 @@ class Ship {
   static count = 0;
 
   static createInterceptor() {
-    return new Ship({ type: 'interceptor', baseAgility: 2 });
+    return new Ship({ type: 'interceptor', baseAgility: 2, maxComponents: 4 });
   }
   static createCruiser() {
-    return new Ship({ type: 'cruiser', baseAgility: 1 });
+    return new Ship({ type: 'cruiser', baseAgility: 1, maxComponents: 6 });
   }
   static createDreadnaught() {
-    return new Ship({ type: 'dreadnaught', baseAgility: 0 });
+    return new Ship({ type: 'dreadnaught', baseAgility: 0, maxComponents: 8 });
   }
   static createStarbase() {
-    return new Ship({ type: 'starbase', baseAgility: 2 });
+    return new Ship({ type: 'starbase', baseAgility: 2, maxComponents: 5 });
   }
 
   constructor({ maxComponents, components = [], baseAgility = 0, fixedComponents = 0, type = '', totalDamage = 0 } = {}) {
@@ -70,10 +70,18 @@ class Ship {
 
     if (electricity < consumption) {
       return [false, 'Your consumption is greater than your electricity⚡!']
-    } else {
-      return [true, 'Your ship is good to go🚀!']
     }
+
+    const componentsSize = this.getComponentsValue('size');
+    const shipSize = this.maxComponents;
+
+    if (componentsSize > shipSize) {
+      return [false, 'You have more components than is allowed⛔!']
+    }
+
+    return [true, 'Your ship is alright👍!']
   };
+
 };
 
 export { Ship };
