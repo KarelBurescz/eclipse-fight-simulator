@@ -9,32 +9,27 @@ console.log(
 );
 
 function run() {
-  const drive1 = new Component({ drive: 3, consumption: 1, type: "support" });
-  const computer1 = new Component({
-    computer: 3,
-    consumption: 2,
-    type: "support",
-  });
-  const computer2 = new Component({
-    computer: 3,
-    consumption: 2,
-    type: "support",
-  });
-  const canon1 = new Component({ type: "canon", damage: 4, consumption: 3 });
-  const canon2 = new Component({ type: "canon", damage: 4, consumption: 3 });
-  const rocket1 = new Component({ consumption: 1, type: "rocket", damage: 2 });
-  const rocket2 = new Component({ consumption: 1, type: "rocket", damage: 2 });
+  const drive1 = new Component({ drive: 2, consumption: 2, type: "support", agility: 2 });
+  const drive2 = new Component({ drive: 3, consumption: 0, type: "support", agility: 3 });
+  const computer1 = new Component({ computer: 3, consumption: 2, type: "support", });
+  const computer2 = new Component({ computer: 3, consumption: 2, type: "support", });
+  const canon1 = new Component({ type: "canon", damage: 4, consumption: 4 });
+  const canon2 = new Component({ type: "canon", damage: 1, consumption: 1 });
+  const rocket1 = new Component({ consumption: 0.5, type: "rocket", damage: 2 });
+  const rocket2 = new Component({ consumption: 0.5, type: "rocket", damage: 1, agility: 0.5 });
   const electricity1 = new Component({ type: "support", electricity: 12 });
-  const hull1 = new Component({ hull: 4, type: "support" });
-  const hull2 = new Component({ hull: 4, type: "support" });
+  const hull1 = new Component({ hull: 3, type: "support", consumption: 2 });
+  const hull2 = new Component({ hull: 3, type: "support", consumption: 2 });
+  const shield2 = new Component({ shield: 2, type: 'support' });
+  const electricity2 = new Component({ type: "support", electricity: 12 });
 
   const ship1A1 = new Ship({
     maxComponents: 5,
-    components: [drive1, computer1, rocket1, rocket2, electricity1],
+    components: [drive1, computer1, canon1, electricity1],
     baseAgility: 3,
     type: "interceptor",
   });
-  const shipsA1 = ship1A1.clone(8);
+  const shipsA1 = ship1A1.clone(6);
 
   const army1 = new Army("army1", shipsA1, true);
   console.log(
@@ -44,18 +39,22 @@ function run() {
   const ship1A2 = new Ship({
     maxComponents: 8,
     components: [
-      drive1,
-      computer1,
-      computer2,
-      canon1,
-      canon2,
-      electricity1,
-      hull1,
       hull2,
+      hull2,
+      hull2,
+      shield2,
+      canon2,
+      computer2,
+      electricity2,
+      Component.fusionDrive,
     ],
     baseAgility: 3,
     type: "dreadnaught",
   });
+
+  const megaShip = Ship.createInterceptor();
+  megaShip.components = [Component.fusionDrive];
+
   const shipsA2 = ship1A2.clone(2);
 
   const army2 = new Army("army2", shipsA2, false);
@@ -82,9 +81,9 @@ function run() {
   return victoriousArmy.name
 }
 
-const stats = {army1: 0, army2: 0};
+const stats = { army1: 0, army2: 0 };
 
-for (let i=0; i < 100; i++) {
+for (let i = 0; i < 100; i++) {
   let res = run();
   stats[res]++;
 }

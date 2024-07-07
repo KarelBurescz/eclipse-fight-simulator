@@ -1,10 +1,14 @@
 import { Dice } from "./dice.mjs";
 
-class Ship { 
+class Ship {
 
   static count = 0;
 
-  constructor ({maxComponents,components = [],baseAgility = 0,fixedComponents = 0,type = '',totalDamage = 0} = {}) {
+  static createInterceptor() {
+    return new Ship({ type: 'interceptor', baseAgility: 2 });
+  }
+
+  constructor({ maxComponents, components = [], baseAgility = 0, fixedComponents = 0, type = '', totalDamage = 0 } = {}) {
     this.maxComponents = maxComponents;
     this.components = components;
     this.baseAgility = baseAgility;
@@ -14,18 +18,18 @@ class Ship {
     this.isExploded = false;
     this.name = `${type}-${Ship.count}`;
     Ship.count++;
-};
+  };
   clone(nTimes) {
     const ships = []
-    for(let i = 0;i < nTimes;i++) {
-      let ship = new Ship(this) 
+    for (let i = 0; i < nTimes; i++) {
+      let ship = new Ship(this)
       ships.push(ship)
     }
     return ships
   }
 
-  getAgility() { 
-    return this.baseAgility + this.components.reduce((a,curr) => a + curr.agility,0);
+  getAgility() {
+    return this.baseAgility + this.components.reduce((a, curr) => a + curr.agility, 0);
   };
 
   getComponentsValue(compName) {
@@ -55,10 +59,10 @@ class Ship {
     const electricity = this.getComponentsValue('electricity');
     const consumption = this.getComponentsValue('consumption');
 
-    if(electricity < consumption) {
-      return [false,'Your consumption is greater than your electricity⚡!']
+    if (electricity < consumption) {
+      return [false, 'Your consumption is greater than your electricity⚡!']
     } else {
-      return [true,'Your ship is good to go🚀!']
+      return [true, 'Your ship is good to go🚀!']
     }
   };
 };
