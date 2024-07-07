@@ -111,6 +111,7 @@ class Battle {
   battle(ai) {
     this.rocketBattle(ai);
     this.canonBattle(ai);
+    return this.army0.ships.length > 0 ? this.army0 : this.army1;
   }
 }
 
