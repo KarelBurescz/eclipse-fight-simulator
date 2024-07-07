@@ -7,6 +7,15 @@ class Ship {
   static createInterceptor() {
     return new Ship({ type: 'interceptor', baseAgility: 2 });
   }
+  static createCruiser() {
+    return new Ship({ type: 'cruiser', baseAgility: 1 });
+  }
+  static createDreadnaught() {
+    return new Ship({ type: 'dreadnaught', baseAgility: 0 });
+  }
+  static createStarbase() {
+    return new Ship({ type: 'starbase', baseAgility: 2 });
+  }
 
   constructor({ maxComponents, components = [], baseAgility = 0, fixedComponents = 0, type = '', totalDamage = 0 } = {}) {
     this.maxComponents = maxComponents;
