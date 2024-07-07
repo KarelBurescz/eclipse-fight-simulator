@@ -45,6 +45,17 @@ class Ship {
     this.totalDamage += damage;
     return this.isExploded = this.totalDamage > this.getComponentsValue('hull') ? true : false;
   }
+
+  controlIntegrity() {
+    const electricity = this.getComponentsValue('electricity');
+    const consumption = this.getComponentsValue('consumption');
+
+    if(electricity < consumption) {
+      return [false,'Your consumption is greater than your electricity⚡!']
+    } else {
+      return [true,'Your ship is good to go🚀!']
+    }
+  };
 };
 
 export { Ship };

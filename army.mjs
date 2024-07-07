@@ -1,8 +1,9 @@
 class Army {
-  constructor(name,ships = []) {
+  constructor(name,ships = [],defending = false) {
     this.name = name;
     ships.forEach((ship) => {ship.army = this})
     this.ships = ships;
+    this.defending = defending
   };
   removeExplodeats() {
     this.ships.forEach((ship) => {
