@@ -153,5 +153,64 @@ describe('Battle', function() {
             expect(ship3.totalDamage).to.eql(3);
             console.log(army0, army1);
         });
+
+        it('should destroy one army in a conflict', function() {
+            let fd = new Fakedice(5);
+            const drive1 = new Component({ drive: 3, consumption: 1, type: "support" });
+            const computer1 = new Component({
+            computer: 3,
+            consumption: 2,
+            type: "support",
+            });
+            const computer2 = new Component({
+            computer: 3,
+            consumption: 2,
+            type: "support",
+
+            });
+            const canon1 = new Component({ type: "canon", damage: 4, consumption: 3, dice: fd});
+            const canon2 = new Component({ type: "canon", damage: 4, consumption: 3, dice: fd });
+            const rocket1 = new Component({ consumption: 1, type: "rocket", damage: 2, dice: fd });
+            const rocket2 = new Component({ consumption: 1, type: "rocket", damage: 2, dice: fd });
+            const electricity1 = new Component({ type: "support", electricity: 12});
+            const hull1 = new Component({ hull: 30, type: "support", dice: fd });
+            const hull2 = new Component({ hull: 30, type: "support", dice: fd });
+
+            const ship1A1 = new Ship({
+            maxComponents: 5,
+            components: [drive1, computer1, rocket1, rocket2, electricity1],
+            baseAgility: 3,
+            type: "interceptor",
+            });
+            const shipsA1 = ship1A1.clone(8);
+
+            const army1 = new Army("army1", shipsA1, true);
+            console.log(
+            "Presenting army1 8 incerteptors with a 2 damage rockets and plus 3 computer🚀"
+            );
+
+            const ship1A2 = new Ship({
+            maxComponents: 8,
+            components: [
+                drive1,
+                computer1,
+                computer2,
+                canon1,
+                canon2,
+                electricity1,
+                hull1,
+                hull2,
+            ],
+            baseAgility: 3,
+            type: "interceptor",
+            });
+            const shipsA2 = ship1A2.clone(2);
+
+            const army2 = new Army("army2", shipsA2, false);
+            let battle = new Battle(army1, army2);
+            battle.battle(new GertrudaAI());
+            console.log('Winner!: ' + army2.ships);
+            expect(army1.ships.length).to.eql(7);
+        });
     })
 });
