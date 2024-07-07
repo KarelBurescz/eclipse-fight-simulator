@@ -1,6 +1,6 @@
 class Dice {
   roll() {
-    return Math.trunc(Math.random() * 6);
+    return Math.trunc(Math.random() * 6) + 1;
   }
 }
 

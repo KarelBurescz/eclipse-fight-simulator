@@ -13,7 +13,7 @@ class GertrudaAI {
                 (eShip) => -eShip.getComponentsValue('shield') + ship.getComponentsValue('computer') + diceValue >= 6
             )
             if(ableToHit.length === 0) {
-                return enemyArmy.ships[0]
+                return null
             }
         const destroyable = ableToHit.filter(
             (eShip) => eShip.getComponentsValue('hull') - eShip.totalDamage - component.damage < 0

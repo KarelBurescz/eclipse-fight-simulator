@@ -10,7 +10,7 @@ console.log(
 
 const drive1 = new Component({ drive: 3, consumption: 1, type: "support" });
 const computer1 = new Component({
-  computer: 3,
+  computer: 1,
   consumption: 2,
   type: "support",
 });
@@ -53,7 +53,7 @@ const ship1A2 = new Ship({
     hull2,
   ],
   baseAgility: 3,
-  type: "interceptor",
+  type: "dreadnaught",
 });
 const shipsA2 = ship1A2.clone(2);
 
@@ -73,5 +73,11 @@ armies.forEach((ship) => {
 });
 
 const battle = new Battle(army1, army2);
+battle.printStatus();
+
+console.log("Startig the battle!\n")
 
 battle.battle(new GertrudaAI());
+
+console.log('\n\nBattle Result, surviving ships:')
+battle.printStatus();
