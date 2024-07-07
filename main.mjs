@@ -13,10 +13,9 @@ function run() {
   const shipA1 = Ship.createCruiser();
 
   shipA1.components = [
-    Component.gluonComputer,
+    Component.sentientHull,
     Component.antiMatterCanon,
-    Component.plasmaMissile,
-    Component.plasmaMissile,
+    Component.antiMatterCanon,
     Component.tachyonDrive,
     Component.zeroPointSource,
     Component.sentientHull,
