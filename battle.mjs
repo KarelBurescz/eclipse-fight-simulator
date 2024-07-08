@@ -5,7 +5,8 @@ import { Dice } from "./dice.mjs";
 import { Component } from "./component.mjs";
 
 class Battle {
-  constructor(army0, army1) {
+  constructor(army0, army1, eventEmitter) {
+    this.eventEmitter = eventEmitter;
     this.army0 = army0;
     this.army1 = army1;
     // TODO: should I do this.army0 or army0? \/
@@ -23,7 +24,7 @@ class Battle {
 
   printStatus() {
     [...this.army0.ships, ...this.army1.ships].forEach((s) => {
-        console.log(`Army: ${s.army.name} Ship: ${s.name} TotalDamage: ${s.totalDamage} IsExploded: ${s.isExploded} TotalHull: ${s.getComponentsValue('hull')}`)
+      this.eventEmitter.emit('log', `Army: ${s.army.name} Ship: ${s.name} TotalDamage: ${s.totalDamage} IsExploded: ${s.isExploded} TotalHull: ${s.getComponentsValue('hull')}`)
     })
   }
 
@@ -36,31 +37,24 @@ class Battle {
       console.log('\n');
       rockets.forEach((r) => {
           let ro = r.dice.roll();
-          console.log(`Ship ${ship.name} is firing with ${r.type}, dice roll: ${ro}, computer: ${ship.getComponentsValue('computer')}`);
+          this.eventEmitter.emit('log', `Ship ${ship.name} is firing with ${r.type}, dice roll: ${ro}, computer: ${ship.getComponentsValue('computer')}`);
         if (ro > 1) {
             let enemyArmy = ship.army === this.army1 ? this.army0 : this.army1;
             let hitting = ai.selectShipToHit(enemyArmy, ship, r, ro);
             if (hitting === null) {
-                console.log(`Ship ${ship.name} has not selected any target!`)
+              this.eventEmitter.emit('log',`Ship ${ship.name} has not selected any target!`)
             } else {
-                console.log(
-                    `${ship.name} is aiming for a ship ${hitting.name} with aguility of: ` +
-                    hitting?.getAgility()
-                );
+              this.eventEmitter.emit('log', `${ship.name} is aiming for a ship ${hitting.name} with aguility of: ` + hitting?.getAgility())
                 const res = hitting?.receiveDamage(r.damage);
                 enemyArmy.removeExplodeats();
-                console.log(
-                    `ship ${hitting.name} received damage of ${r.damage}, ${
-                    res ? "exploded" : "not exploded"
-                    }, totalDamage: ${hitting.totalDamage}`
-                );
+                this.eventEmitter.emit('log', `ship ${hitting.name} received damage of ${r.damage}, ${res ? "exploded" : "not exploded"}, totalDamage: ${hitting.totalDamage}`)
             }
         }
       });
     });
   }
   canonBattleRound(ai) {
-    console.log(`Starting Cannon Battle round, ${this.army0.name} size: ${this.army0.ships.length}, ${this.army1.name} size: ${this.army1.ships.length}`)
+    this.eventEmitter.emit('log', `Starting Cannon Battle round, ${this.army0.name} size: ${this.army0.ships.length}, ${this.army1.name} size: ${this.army1.ships.length}`)
     this.createBattleOrder().forEach((ship) => {
       if (ship.isExploded) {
         return;
@@ -68,24 +62,20 @@ class Battle {
       let canons = ship.getCanons();
       canons.forEach((c) => {
         let ro = c.dice.roll();
-        console.log(`Ship ${ship.name} is firing with ${c.type} dice roll: ${ro}, computer: ${ship.getComponentsValue('computer')}`);
+        this.eventEmitter.emit('log', `Ship ${ship.name} is firing with ${c.type} dice roll: ${ro}, computer: ${ship.getComponentsValue('computer')}`)
         if (ro > 1) {
             let enemyArmy = ship.army === this.army1 ? this.army0 : this.army1;
             let hitting = ai.selectShipToHit(enemyArmy, ship, c, ro);
             if (hitting === null) {
-                console.log(`Ship ${ship.name} has not selected any target!`)
+                this.eventEmitter.emit('log', `Ship ${ship.name} has not selected any target!`)
             } else {
-                console.log(
-                    `We are aiming for a ship ${hitting.name} with aguility of: ` +
-                    hitting?.getAgility()
-                );
+              this.eventEmitter.emit('log', `We are aiming for a ship ${hitting.name} with aguility of: ` +
+                    hitting?.getAgility());
                 const res = hitting?.receiveDamage(c.damage);
                 enemyArmy.removeExplodeats();
-                console.log(
-                    `ship ${hitting.name} received damage of ${c.damage}, ${
-                    res ? "exploded" : "not exploded"
-                    }`
-                );
+                this.eventEmitter.emit('log', `ship ${hitting.name} received damage of ${c.damage}, ${
+                res ? "exploded" : "not exploded"}`
+                )
             }
         };
       });
@@ -111,7 +101,7 @@ class Battle {
   battle(ai) {
     this.rocketBattle(ai);
     this.canonBattle(ai);
-    return this.army0.ships.length > 0 ? this.army0 : this.army1;
+    return [(this.army0.ships.length > 0 ? this.army0 : this.army1), (this.army0.ships.length > 0 ? this.army1 : this.army0)];
   }
 }
 

@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "expect.js": "^0.3.1",
+    "fs": "^0.0.1-security",
     "mocha": "^10.6.0"
   }
 }
