@@ -5,14 +5,18 @@ import { Component } from '../component.mjs';
 import expect from 'expect.js';
 import { Fakedice } from '../dice.mjs';
 import { GertrudaAI } from '../gertrudaAI.mjs';
+import EventEmitter from 'node:events';
 // import {  } from '../'
+let eventEmitter;
 describe('Battle', function() {
     describe('createRocketsBattleOrder()', function() {
-
+        beforeEach(function () {
+            eventEmitter = new EventEmitter();
+        });
         it('should return [] if there are not any ships', function() {
             let army0 = new Army([]);
             let army1 = new Army([]);
-            let battleOrder = new Battle(army0, army1).createRocketsBattleOrder();
+            let battleOrder = new Battle(army0, army1, eventEmitter).createRocketsBattleOrder();
             expect(battleOrder).to.eql([]);
         });
 
@@ -31,7 +35,7 @@ describe('Battle', function() {
 
             let army1 = new Army('army1',[]);
             
-            let battleOrder = new Battle(army0, army1).createRocketsBattleOrder();
+            let battleOrder = new Battle(army0, army1, eventEmitter).createRocketsBattleOrder();
             expect(battleOrder).to.eql([ship]);
         });
 
@@ -64,13 +68,14 @@ describe('Battle', function() {
             });
             let army0 = new Army('army0',[ship1, ship2]);
             let army1 = new Army('army1',[ship3]);
-            let order = new Battle(army0, army1).createRocketsBattleOrder();
+            let order = new Battle(army0, army1, eventEmitter).createRocketsBattleOrder();
             const rightOrder = [ship3, ship2, ship1];
             expect(order).to.eql(rightOrder);
         });
     });
     describe('rocketBattle()', function() {
         it('should destroy one army', function() {
+            
             let fd = new Fakedice(5);
             let ship1 = new Ship({
                 components: [
@@ -102,8 +107,8 @@ describe('Battle', function() {
     
             let army0 = new Army('army0',[ship1]);
             let army1 = new Army('army1',[ship2, ship3]);
-            let battle = new Battle(army0, army1);
-            battle.rocketBattle(new GertrudaAI());
+            let battle = new Battle(army0, army1, eventEmitter);
+            battle.rocketBattle(new GertrudaAI(), eventEmitter);
             expect(ship1.isExploded).to.eql(true);
             expect(ship2.isExploded).to.eql(true);
             expect(ship3.isExploded).to.eql(false);
@@ -145,7 +150,7 @@ describe('Battle', function() {
             
             let army0 = new Army('army0',[ship1]);
             let army1 = new Army('army1',[ship2, ship3]);
-            let battle = new Battle(army0, army1);
+            let battle = new Battle(army0, army1, eventEmitter);
             battle.canonBattle(new GertrudaAI());
             expect(ship1.isExploded).to.eql(true);
             expect(ship2.isExploded).to.eql(true);
@@ -207,7 +212,7 @@ describe('Battle', function() {
             const shipsA2 = ship1A2.clone(2);
 
             const army2 = new Army("army2", shipsA2, false);
-            let battle = new Battle(army1, army2);
+            let battle = new Battle(army1, army2, eventEmitter);
             battle.battle(new GertrudaAI());
             console.log('Winner!: ' + army2.ships);
             expect(army1.ships.length).to.eql(0);
