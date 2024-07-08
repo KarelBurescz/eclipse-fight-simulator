@@ -1,20 +1,27 @@
 import { Dice } from "./dice.mjs";
 
+const ShipType = {
+  interceptor: 'interceptor',
+  cruiser: 'cruiser',
+  dreadnaught: 'dreadnaught',
+  starbase: 'starbase',
+}
+
 class Ship {
 
   static count = 0;
 
   static createInterceptor() {
-    return new Ship({ type: 'interceptor', baseAgility: 2, maxComponents: 4 });
+    return new Ship({ type: ShipType.interceptor, baseAgility: 2, maxComponents: 4 });
   }
   static createCruiser() {
-    return new Ship({ type: 'cruiser', baseAgility: 1, maxComponents: 6 });
+    return new Ship({ type: ShipType.cruiser, baseAgility: 1, maxComponents: 6 });
   }
   static createDreadnaught() {
-    return new Ship({ type: 'dreadnaught', baseAgility: 0, maxComponents: 8 });
+    return new Ship({ type: ShipType.dreadnaught, baseAgility: 0, maxComponents: 8 });
   }
   static createStarbase() {
-    return new Ship({ type: 'starbase', baseAgility: 2, maxComponents: 5 });
+    return new Ship({ type: ShipType.starbase, baseAgility: 2, maxComponents: 5 });
   }
 
   constructor({ maxComponents, components = [], baseAgility = 0, fixedComponents = 0, type = '', totalDamage = 0 } = {}) {
@@ -81,7 +88,11 @@ class Ship {
 
     return [true, 'Your ship is alright👍!']
   };
+  getFingerPrint() {
+    const componentsNames = this.components.map((el) => el.subtype).sort();
+    return `${this.type}-${componentsNames.join('-')}`
+  }
 
 };
 
-export { Ship };
+export { Ship, ShipType };
